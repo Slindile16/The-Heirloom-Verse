@@ -1,0 +1,9 @@
+{
+  "name": "heirloom-verse-vercel",
+  "private": true,
+  "type": "module",
+  "main": "storefront/server.mjs",
+  "engines": {
+    "node": ">=22.13"
+  }
+}
