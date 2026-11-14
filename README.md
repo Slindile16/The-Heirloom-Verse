@@ -22,9 +22,7 @@ Install Docker Desktop with Linux containers and Docker Compose v2, then run:
 docker compose up --build -d --wait --wait-timeout 240
 ```
 
-Allow about 4 GB for Docker and the builds.
-All published ports bind to localhost. See the [operations runbook](docs/operations.md)
-for declines, outages, clean resets, and troubleshooting.
+Allow about 4 GB for Docker and the builds. All published ports bind to localhost.
 
 | Service | Port | Main endpoints |
 |---|---|---|
@@ -69,7 +67,7 @@ messages, but application restarts do not preserve orders or inventory. Run one
 instance per service and reset the complete demo between independent scenarios.
 This is a portfolio demonstration, with simulated payments and notifications;
 production durability, authentication, and real payment/email providers are outside
-its scope. The [runbook](docs/operations.md) explains crash and timeout limits.
+its scope.
 
 ## Build without Docker
 
@@ -87,14 +85,6 @@ GitHub Actions checks the Java build, storefront syntax and Compose configuratio
 Service URLs and broker settings can be changed through `PRODUCT_SERVICE_URL`,
 `INVENTORY_SERVICE_URL`, `ACTIVEMQ_BROKER_URL`, `ACTIVEMQ_USER`, and `ACTIVEMQ_PASSWORD`.
 
-## Documentation
-
-- [Architecture and service ownership](docs/architecture.md)
-- [Messaging contracts and setup](docs/messaging.md)
-- [Concurrency guarantees](docs/concurrency.md)
-- [Operations, retries, DLQ, and reset procedures](docs/operations.md)
-- [Completed verification](docs/verification.md)
-
 ## Development roadmap
 
 - [X] **Phase 1:** Project structure and architecture.
@@ -110,6 +100,5 @@ Service URLs and broker settings can be changed through `PRODUCT_SERVICE_URL`,
 ## Repository layout
 
 `common/` holds shared events and JMS configuration. Each `*-service/` module owns
-its API and business behavior. `storefront/` contains the jewellery website;
-`docs/` contains design and operation notes. The root
+its API and business behavior. `storefront/` contains the jewellery website. The root
 Dockerfile builds any service, and `docker-compose.yml` starts the full system.
