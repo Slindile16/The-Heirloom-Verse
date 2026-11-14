@@ -56,7 +56,7 @@ public class OrderService {
 
     public Order create(CreateOrderRequest request) {
 
-        List<OrderItem> items = request.items().stream()
+        List<OrderItem> items = CollectionOffer.apply(request.items().stream()
                 .map(item -> {
 
                     ProductDetails product;
@@ -94,7 +94,7 @@ public class OrderService {
                             product.currency()
                     );
                 })
-                .toList();
+                .toList(), request.selections());
 
         if (items.stream()
                 .map(OrderItem::currency)

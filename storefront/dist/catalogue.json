@@ -358,7 +358,8 @@
     "audience": [
       "Unisex"
     ],
-    "style": "Chains"
+    "style": "Chains",
+    "collectionOffer": true
   },
   {
     "id": "memoir-pendant",
@@ -480,7 +481,8 @@
       "55cm",
       "60cm"
     ],
-    "optionLabel": "Chain length"
+    "optionLabel": "Chain length",
+    "collectionOffer": true
   },
   {
     "id": "emerald-reverie-necklace",
@@ -708,7 +710,8 @@
     "options": [
       "Pair"
     ],
-    "optionLabel": "Sold as"
+    "optionLabel": "Sold as",
+    "collectionOffer": true
   },
   {
     "id": "emerald-muse-drops",
@@ -752,7 +755,8 @@
     "options": [
       "Pair"
     ],
-    "optionLabel": "Sold as"
+    "optionLabel": "Sold as",
+    "collectionOffer": true
   },
   {
     "id": "sculpture-ear-cuffs",
@@ -946,7 +950,8 @@
       "17cm",
       "19cm"
     ],
-    "optionLabel": "Bracelet length"
+    "optionLabel": "Bracelet length",
+    "collectionOffer": true
   },
   {
     "id": "rose-ribbon-bangle",
@@ -1108,7 +1113,8 @@
       "21cm",
       "23cm"
     ],
-    "optionLabel": "Bracelet length"
+    "optionLabel": "Bracelet length",
+    "collectionOffer": true
   },
   {
     "id": "shared-white-silver",
@@ -1137,7 +1143,8 @@
       "21cm",
       "23cm"
     ],
-    "optionLabel": "Bracelet length"
+    "optionLabel": "Bracelet length",
+    "collectionOffer": true
   },
   {
     "id": "unity-black-gold",
@@ -2901,7 +2908,8 @@
     "keywords": [
       "Matching necklaces",
       "Sun disc pendant"
-    ]
+    ],
+    "collectionOffer": true
   },
   {
     "id": "solstice-moon-necklace",
@@ -2930,7 +2938,8 @@
     "keywords": [
       "Matching necklaces",
       "Crescent moon pendant"
-    ]
+    ],
+    "collectionOffer": true
   },
   {
     "id": "unity-black-necklace",
@@ -5666,6 +5675,932 @@
       "Smooth",
       "Circle hoops"
     ],
-    "inclusionNote": "One matching pair: two pierced hoop earrings. Outside diameter 25mm."
+    "inclusionNote": "One matching pair: two pierced hoop earrings. Outside diameter 25mm.",
+    "collectionOffer": true
+  },
+  {
+    "id": "golden-thread-twist",
+    "sku": "HV185",
+    "name": "The Golden Thread Twist",
+    "category": "Rings",
+    "price": 4800,
+    "metal": "18ct yellow gold",
+    "gemstone": "None",
+    "stone": "Twisted rope band",
+    "description": "A slender rope of polished gold, bringing a little texture to your everyday stack. Wear it alone or combine it with the Golden Thread Dots and Evermore bands.",
+    "story": "A golden thread through every chapter.",
+    "audience": [
+      "Unisex"
+    ],
+    "style": "Stacking",
+    "image": "golden-thread-twist",
+    "options": [
+      "J",
+      "L",
+      "N",
+      "P",
+      "R",
+      "T",
+      "V",
+      "X",
+      "Z"
+    ],
+    "optionLabel": "Ring size",
+    "newArrival": true,
+    "tag": "New arrival",
+    "imageExtension": "png",
+    "collectionOffer": true
+  },
+  {
+    "id": "golden-thread-dots",
+    "sku": "HV186",
+    "name": "The Golden Thread Dots",
+    "category": "Rings",
+    "price": 8200,
+    "metal": "18ct yellow gold",
+    "gemstone": "Lab-grown diamond",
+    "stone": "Five tiny bezel-set round diamonds",
+    "description": "Five tiny diamond dots punctuate a fine gold band, each held in a smooth bezel. A delicate layer for your own ring story.",
+    "story": "Small moments, scattered with light.",
+    "audience": [
+      "Unisex"
+    ],
+    "style": "Stacking",
+    "image": "golden-thread-dots",
+    "options": [
+      "J",
+      "L",
+      "N",
+      "P",
+      "R",
+      "T",
+      "V",
+      "X",
+      "Z"
+    ],
+    "optionLabel": "Ring size",
+    "newArrival": true,
+    "tag": "New arrival",
+    "imageExtension": "png"
+  },
+  {
+    "id": "starlight-curve",
+    "sku": "HV187",
+    "name": "The Starlight Curve",
+    "category": "Rings",
+    "price": 9800,
+    "metal": "18ct yellow gold",
+    "gemstone": "Lab-grown diamond",
+    "stone": "Diamond-set shallow V nesting band",
+    "description": "A gentle V of tiny diamonds on a slender gold band. Nest it between plain bands or wear its quiet sparkle on its own.",
+    "story": "A little light, following your curve.",
+    "audience": [
+      "Unisex"
+    ],
+    "style": "Stacking",
+    "image": "starlight-curve",
+    "options": [
+      "J",
+      "L",
+      "N",
+      "P",
+      "R",
+      "T",
+      "V",
+      "X",
+      "Z"
+    ],
+    "optionLabel": "Ring size",
+    "newArrival": true,
+    "tag": "New arrival",
+    "imageExtension": "png"
+  },
+  {
+    "id": "harmony-rose-band",
+    "sku": "HV188",
+    "name": "The Harmony Rose Band",
+    "category": "Rings",
+    "price": 12500,
+    "metal": "18ct rose gold",
+    "gemstone": "None",
+    "stone": "Plain polished rose gold band",
+    "description": "A fine, softly rounded rose gold band with a warm polished finish. Mix it with yellow gold and silver, or keep your everyday look beautifully simple.",
+    "story": "Warmth in the everyday.",
+    "audience": [
+      "Unisex"
+    ],
+    "style": "Stacking",
+    "image": "harmony-rose-band",
+    "options": [
+      "J",
+      "L",
+      "N",
+      "P",
+      "R",
+      "T",
+      "V",
+      "X",
+      "Z"
+    ],
+    "optionLabel": "Ring size",
+    "newArrival": true,
+    "tag": "New arrival",
+    "imageExtension": "png"
+  },
+  {
+    "id": "harmony-silver-band",
+    "sku": "HV189",
+    "name": "The Harmony Silver Band",
+    "category": "Rings",
+    "price": 2400,
+    "metal": "Sterling silver",
+    "gemstone": "None",
+    "stone": "Plain polished silver band",
+    "description": "A slim, softly rounded sterling silver band with a bright polished finish. An easy foundation for a mixed-metal stack.",
+    "story": "A silver line through your story.",
+    "audience": [
+      "Unisex"
+    ],
+    "style": "Stacking",
+    "image": "harmony-silver-band",
+    "options": [
+      "J",
+      "L",
+      "N",
+      "P",
+      "R",
+      "T",
+      "V",
+      "X",
+      "Z"
+    ],
+    "optionLabel": "Ring size",
+    "newArrival": true,
+    "tag": "New arrival",
+    "imageExtension": "png",
+    "collectionOffer": true
+  },
+  {
+    "id": "dewdrop-ring",
+    "sku": "HV190",
+    "name": "The Dewdrop Ring",
+    "category": "Rings",
+    "price": 6900,
+    "metal": "18ct yellow gold",
+    "gemstone": "Lab-grown diamond",
+    "stone": "Tiny round bezel-set diamond",
+    "description": "One tiny round diamond, framed by a smooth gold bezel on a delicate band. A simple everyday ring with a small point of light.",
+    "story": "The beauty of one small moment.",
+    "audience": [
+      "Unisex"
+    ],
+    "style": "Solitaire",
+    "image": "dewdrop-ring",
+    "options": [
+      "J",
+      "L",
+      "N",
+      "P",
+      "R",
+      "T",
+      "V",
+      "X",
+      "Z"
+    ],
+    "optionLabel": "Ring size",
+    "newArrival": true,
+    "tag": "New arrival",
+    "imageExtension": "png",
+    "collectionOffer": true
+  },
+  {
+    "id": "constellation-ring",
+    "sku": "HV191",
+    "name": "The Constellation Ring",
+    "category": "Rings",
+    "price": 9400,
+    "metal": "18ct yellow gold",
+    "gemstone": "Lab-grown diamond",
+    "stone": "Five small prong-set round diamonds",
+    "description": "Five small diamonds sit in delicate prong settings across a fine gold band. Wear their scattered sparkle alone or alongside your favourite stacking bands.",
+    "story": "Your own constellation, close at hand.",
+    "audience": [
+      "Unisex"
+    ],
+    "style": "Diamond band",
+    "image": "constellation-ring",
+    "options": [
+      "J",
+      "L",
+      "N",
+      "P",
+      "R",
+      "T",
+      "V",
+      "X",
+      "Z"
+    ],
+    "optionLabel": "Ring size",
+    "newArrival": true,
+    "tag": "New arrival",
+    "imageExtension": "png"
+  },
+  {
+    "id": "still-light-ring",
+    "sku": "HV192",
+    "name": "The Still Light Ring",
+    "category": "Rings",
+    "price": 8900,
+    "metal": "18ct yellow gold",
+    "gemstone": "Lab-grown diamond",
+    "stone": "East-west baguette diamond",
+    "description": "A small baguette diamond rests horizontally in a minimal half-bezel setting on a slender gold band. Clean lines and a quiet glimmer for everyday wear.",
+    "story": "A pause, held in light.",
+    "audience": [
+      "Unisex"
+    ],
+    "style": "Solitaire",
+    "image": "still-light-ring",
+    "options": [
+      "J",
+      "L",
+      "N",
+      "P",
+      "R",
+      "T",
+      "V",
+      "X",
+      "Z"
+    ],
+    "optionLabel": "Ring size",
+    "newArrival": true,
+    "tag": "New arrival",
+    "imageExtension": "png"
+  },
+  {
+    "id": "quiet-promise-band",
+    "sku": "HV193",
+    "name": "The Quiet Promise Band",
+    "category": "Rings",
+    "price": 8900,
+    "metal": "18ct yellow gold",
+    "gemstone": "Lab-grown diamond",
+    "stone": "Single flush-set diamond in a 4mm brushed band",
+    "description": "A softly brushed 4mm gold band with one tiny flush-set diamond. Wear it as your own daily promise or choose two in independently selected sizes.",
+    "story": "A promise that needs no grand gesture.",
+    "audience": [
+      "Unisex"
+    ],
+    "style": "Wedding band",
+    "image": "quiet-promise-band",
+    "options": [
+      "J",
+      "L",
+      "N",
+      "P",
+      "R",
+      "T",
+      "V",
+      "X",
+      "Z"
+    ],
+    "optionLabel": "Ring size",
+    "newArrival": true,
+    "tag": "New arrival",
+    "imageExtension": "png"
+  },
+  {
+    "id": "interwoven-band",
+    "sku": "HV194",
+    "name": "The Interwoven Band",
+    "category": "Rings",
+    "price": 3200,
+    "metal": "Sterling silver",
+    "gemstone": "None",
+    "stone": "Two crossing curved silver strands",
+    "description": "A slender silver band opens into two smooth strands that cross once at the front. A simple flowing detail, available individually or as a matching pair.",
+    "story": "Our paths, gently intertwined.",
+    "audience": [
+      "Unisex"
+    ],
+    "style": "Sculptural",
+    "image": "interwoven-band",
+    "options": [
+      "J",
+      "L",
+      "N",
+      "P",
+      "R",
+      "T",
+      "V",
+      "X",
+      "Z"
+    ],
+    "optionLabel": "Ring size",
+    "newArrival": true,
+    "tag": "New arrival",
+    "imageExtension": "png"
+  },
+  {
+    "id": "shared-star-band",
+    "sku": "HV195",
+    "name": "The Shared Star Band",
+    "category": "Rings",
+    "price": 2600,
+    "metal": "Sterling silver",
+    "gemstone": "None",
+    "stone": "Engraved four-point star",
+    "description": "A small four-point star is engraved into a slim polished 3mm silver band. Pair it with the diamond version as a quiet reminder of your shared connection.",
+    "story": "Under the same little star.",
+    "audience": [
+      "Unisex"
+    ],
+    "style": "Wedding band",
+    "image": "shared-star-band",
+    "options": [
+      "J",
+      "L",
+      "N",
+      "P",
+      "R",
+      "T",
+      "V",
+      "X",
+      "Z"
+    ],
+    "optionLabel": "Ring size",
+    "newArrival": true,
+    "tag": "New arrival",
+    "imageExtension": "png"
+  },
+  {
+    "id": "shared-star-diamond-band",
+    "sku": "HV196",
+    "name": "The Shared Star Diamond Band",
+    "category": "Rings",
+    "price": 4200,
+    "metal": "Sterling silver",
+    "gemstone": "Lab-grown diamond",
+    "stone": "Engraved four-point star with a tiny flush-set diamond",
+    "description": "A tiny diamond lights the centre of an engraved four-point star on a polished 3mm silver band. A delicate companion to the plain Shared Star Band.",
+    "story": "A shared star, with a little extra light.",
+    "audience": [
+      "Unisex"
+    ],
+    "style": "Wedding band",
+    "image": "shared-star-diamond-band",
+    "options": [
+      "J",
+      "L",
+      "N",
+      "P",
+      "R",
+      "T",
+      "V",
+      "X",
+      "Z"
+    ],
+    "optionLabel": "Ring size",
+    "newArrival": true,
+    "tag": "New arrival",
+    "imageExtension": "png"
+  },
+  {
+    "id": "golden-thread-stack",
+    "sku": "HV197",
+    "name": "The Golden Thread Stack",
+    "category": "Rings",
+    "price": 25800,
+    "metal": "18ct yellow gold",
+    "gemstone": "Lab-grown diamond",
+    "stone": "3 coordinating rings",
+    "description": "Three slim gold bands bring together twisted texture, tiny bezel-set diamond dots and a plain polished finish. Wear the complete stack or style each band separately. All three rings are included.",
+    "story": "Three textures, one golden story.",
+    "audience": [
+      "Unisex"
+    ],
+    "style": "Stacking set",
+    "image": "golden-thread-stack",
+    "options": [],
+    "optionLabel": "Individual ring sizes",
+    "components": [
+      {
+        "productId": "golden-thread-twist",
+        "label": "Twisted band"
+      },
+      {
+        "productId": "golden-thread-dots",
+        "label": "Diamond dots band"
+      },
+      {
+        "productId": "evermore-band",
+        "label": "Plain polished band"
+      }
+    ],
+    "newArrival": true,
+    "tag": "3-ring set",
+    "inclusionNote": "All 3 rings are included. Choose each ring size independently. Each design is also available individually.",
+    "keywords": [
+      "Stack rings",
+      "Stackable",
+      "Stacking"
+    ],
+    "relationships": [],
+    "imageExtension": "png"
+  },
+  {
+    "id": "starlight-stack",
+    "sku": "HV198",
+    "name": "The Starlight Stack",
+    "category": "Rings",
+    "price": 35400,
+    "metal": "18ct yellow gold",
+    "gemstone": "Lab-grown diamond",
+    "stone": "3 coordinating rings",
+    "description": "Two delicate polished gold bands frame a diamond-set curved band. A three-ring combination for a little everyday light. All three rings are included.",
+    "story": "Layers of light, collected by you.",
+    "audience": [
+      "Unisex"
+    ],
+    "style": "Stacking set",
+    "image": "starlight-stack",
+    "options": [],
+    "optionLabel": "Individual ring sizes",
+    "components": [
+      {
+        "productId": "evermore-band",
+        "label": "First plain band"
+      },
+      {
+        "productId": "starlight-curve",
+        "label": "Diamond curved band"
+      },
+      {
+        "productId": "evermore-band",
+        "label": "Second plain band"
+      }
+    ],
+    "newArrival": true,
+    "tag": "3-ring set",
+    "inclusionNote": "All 3 rings are included. Choose each ring size independently. Each design is also available individually.",
+    "keywords": [
+      "Stack rings",
+      "Stackable",
+      "Stacking"
+    ],
+    "relationships": [],
+    "imageExtension": "png"
+  },
+  {
+    "id": "harmony-stack",
+    "sku": "HV199",
+    "name": "The Harmony Stack",
+    "category": "Rings",
+    "price": 27700,
+    "metal": "18ct yellow gold / 18ct rose gold / Sterling silver",
+    "gemstone": "None",
+    "stone": "3 coordinating rings",
+    "description": "Three fine polished bands in yellow gold, rose gold and sterling silver. Mix their tones, wear them together or enjoy one simple band at a time. All three rings are included.",
+    "story": "Different tones, a shared harmony.",
+    "audience": [
+      "Unisex"
+    ],
+    "style": "Stacking set",
+    "image": "harmony-stack",
+    "options": [],
+    "optionLabel": "Individual ring sizes",
+    "components": [
+      {
+        "productId": "evermore-band",
+        "label": "Yellow gold band"
+      },
+      {
+        "productId": "harmony-rose-band",
+        "label": "Rose gold band"
+      },
+      {
+        "productId": "harmony-silver-band",
+        "label": "Silver band"
+      }
+    ],
+    "newArrival": true,
+    "tag": "3-ring set",
+    "inclusionNote": "All 3 rings are included. Choose each ring size independently. Each design is also available individually.",
+    "keywords": [
+      "Stack rings",
+      "Stackable",
+      "Stacking"
+    ],
+    "relationships": [],
+    "imageExtension": "png"
+  },
+  {
+    "id": "quiet-promise-pair",
+    "sku": "HV200",
+    "name": "The Quiet Promise Pair",
+    "category": "Rings",
+    "price": 17800,
+    "metal": "18ct yellow gold",
+    "gemstone": "Lab-grown diamond",
+    "stone": "2 coordinating rings",
+    "description": "Two matching brushed gold bands, each with one tiny flush-set diamond. An understated pair for your shared promise, with each size selected independently. Both rings are included.",
+    "story": "Two quiet promises, beautifully kept.",
+    "audience": [
+      "Unisex"
+    ],
+    "style": "Couples’ set",
+    "image": "quiet-promise-pair",
+    "options": [],
+    "optionLabel": "Individual ring sizes",
+    "components": [
+      {
+        "productId": "quiet-promise-band",
+        "label": "First partner’s band"
+      },
+      {
+        "productId": "quiet-promise-band",
+        "label": "Second partner’s band"
+      }
+    ],
+    "newArrival": true,
+    "tag": "2-ring set",
+    "inclusionNote": "All 2 rings are included. Choose each ring size independently. Each design is also available individually.",
+    "keywords": [
+      "Pair rings",
+      "Matching rings",
+      "Couple rings"
+    ],
+    "relationships": [
+      "Couples",
+      "Partners",
+      "Friends"
+    ],
+    "imageExtension": "png"
+  },
+  {
+    "id": "interwoven-pair",
+    "sku": "HV201",
+    "name": "The Interwoven Pair",
+    "category": "Rings",
+    "price": 6400,
+    "metal": "Sterling silver",
+    "gemstone": "None",
+    "stone": "2 coordinating rings",
+    "description": "Two matching slender silver rings with smooth crossing curves. A flowing symbol of connection for partners or friends. Choose each size independently; both rings are included.",
+    "story": "Two paths, woven into one story.",
+    "audience": [
+      "Unisex"
+    ],
+    "style": "Couples’ set",
+    "image": "interwoven-pair",
+    "options": [],
+    "optionLabel": "Individual ring sizes",
+    "components": [
+      {
+        "productId": "interwoven-band",
+        "label": "First curved band"
+      },
+      {
+        "productId": "interwoven-band",
+        "label": "Second curved band"
+      }
+    ],
+    "newArrival": true,
+    "tag": "2-ring set",
+    "inclusionNote": "All 2 rings are included. Choose each ring size independently. Each design is also available individually.",
+    "keywords": [
+      "Pair rings",
+      "Matching rings",
+      "Couple rings"
+    ],
+    "relationships": [
+      "Couples",
+      "Partners",
+      "Friends"
+    ],
+    "imageExtension": "png"
+  },
+  {
+    "id": "shared-star-pair",
+    "sku": "HV202",
+    "name": "The Shared Star Pair",
+    "category": "Rings",
+    "price": 6800,
+    "metal": "Sterling silver",
+    "gemstone": "Lab-grown diamond",
+    "stone": "2 coordinating rings",
+    "description": "Two coordinating silver bands share an engraved four-point star; one holds a tiny diamond at its centre. A matching pair for your favourite person. Both rings are included, with independent sizing.",
+    "story": "A little star to share.",
+    "audience": [
+      "Unisex"
+    ],
+    "style": "Couples’ set",
+    "image": "shared-star-pair",
+    "options": [],
+    "optionLabel": "Individual ring sizes",
+    "components": [
+      {
+        "productId": "shared-star-band",
+        "label": "Engraved star band"
+      },
+      {
+        "productId": "shared-star-diamond-band",
+        "label": "Diamond star band"
+      }
+    ],
+    "newArrival": true,
+    "tag": "2-ring set",
+    "inclusionNote": "All 2 rings are included. Choose each ring size independently. Each design is also available individually.",
+    "keywords": [
+      "Pair rings",
+      "Matching rings",
+      "Couple rings"
+    ],
+    "relationships": [
+      "Couples",
+      "Partners",
+      "Friends"
+    ],
+    "imageExtension": "png"
+  },
+  {
+    "id": "pearl-poetry-suite",
+    "sku": "HV203",
+    "name": "The Pearl Poetry Suite",
+    "category": "Jewellery Sets",
+    "price": 37600,
+    "metal": "18ct yellow gold",
+    "gemstone": "Cultured pearl",
+    "stone": "One pearl necklace, one pair of pearl drop earrings and one pearl bracelet.",
+    "description": "A single pearl pendant, graceful pearl drops and a freshwater pearl bracelet bring a soft gold-and-pearl look together. All pictured jewellery is included.",
+    "story": "A little poetry, from every angle.",
+    "audience": [
+      "Women"
+    ],
+    "style": "Pearl sets",
+    "image": "pearl-poetry-suite",
+    "imageExtension": "png",
+    "options": [],
+    "optionLabel": "Options for each design",
+    "components": [
+      {
+        "productId": "celestial-pearl-necklace",
+        "label": "Pearl necklace"
+      },
+      {
+        "productId": "pearl-poetry-drops",
+        "label": "Pearl earrings (pair)"
+      },
+      {
+        "productId": "pearl-whisper-bracelet",
+        "label": "Pearl bracelet"
+      }
+    ],
+    "pieceCount": 4,
+    "contentsSummary": "One pearl necklace, one pair of pearl drop earrings and one pearl bracelet.",
+    "inclusionNote": "One pearl necklace, one pair of pearl drop earrings and one pearl bracelet. Choose the fit of each necklace, bracelet or ring below. Earrings are supplied as one pair.",
+    "newArrival": true,
+    "tag": "Complete set",
+    "keywords": [
+      "Jewellery set",
+      "Matching set",
+      "Gift set",
+      "Pearl sets"
+    ]
+  },
+  {
+    "id": "first-light-diamond-suite",
+    "sku": "HV204",
+    "name": "The First Light Diamond Suite",
+    "category": "Jewellery Sets",
+    "price": 32600,
+    "metal": "18ct yellow gold",
+    "gemstone": "Lab-grown diamond",
+    "stone": "One diamond necklace, one pair of diamond huggies and one diamond ring.",
+    "description": "A pear diamond pendant, close-fitting diamond huggies and a tiny bezel-set diamond ring. Three delicate designs for a complete everyday glow. All pictured jewellery is included.",
+    "story": "Small lights, beautifully together.",
+    "audience": [
+      "Women",
+      "Unisex"
+    ],
+    "style": "Diamond sets",
+    "image": "first-light-diamond-suite",
+    "imageExtension": "png",
+    "options": [],
+    "optionLabel": "Options for each design",
+    "components": [
+      {
+        "productId": "first-light-pendant",
+        "label": "Diamond necklace"
+      },
+      {
+        "productId": "lumiere-huggies",
+        "label": "Diamond huggies (pair)"
+      },
+      {
+        "productId": "dewdrop-ring",
+        "label": "Diamond ring"
+      }
+    ],
+    "pieceCount": 4,
+    "contentsSummary": "One diamond necklace, one pair of diamond huggies and one diamond ring.",
+    "inclusionNote": "One diamond necklace, one pair of diamond huggies and one diamond ring. Choose the fit of each necklace, bracelet or ring below. Earrings are supplied as one pair.",
+    "newArrival": true,
+    "tag": "Complete set",
+    "keywords": [
+      "Jewellery set",
+      "Matching set",
+      "Gift set",
+      "Diamond sets"
+    ]
+  },
+  {
+    "id": "emerald-muse-suite",
+    "sku": "HV205",
+    "name": "The Emerald Muse Suite",
+    "category": "Jewellery Sets",
+    "price": 79200,
+    "metal": "18ct yellow gold",
+    "gemstone": "Emerald",
+    "stone": "One emerald necklace, one pair of emerald drop earrings and one emerald ring.",
+    "description": "Rich green emeralds connect a clean pendant, refined drop earrings and an oval bezel-set ring in warm yellow gold. All pictured jewellery is included.",
+    "story": "A vivid chapter, told in green.",
+    "audience": [
+      "Women",
+      "Unisex"
+    ],
+    "style": "Gemstone sets",
+    "image": "emerald-muse-suite",
+    "imageExtension": "png",
+    "options": [],
+    "optionLabel": "Options for each design",
+    "components": [
+      {
+        "productId": "emerald-reverie-necklace",
+        "label": "Emerald necklace"
+      },
+      {
+        "productId": "emerald-muse-drops",
+        "label": "Emerald drop earrings (pair)"
+      },
+      {
+        "productId": "verdant-emerald-ring",
+        "label": "Emerald ring"
+      }
+    ],
+    "pieceCount": 4,
+    "contentsSummary": "One emerald necklace, one pair of emerald drop earrings and one emerald ring.",
+    "inclusionNote": "One emerald necklace, one pair of emerald drop earrings and one emerald ring. Choose the fit of each necklace, bracelet or ring below. Earrings are supplied as one pair.",
+    "newArrival": true,
+    "tag": "Complete set",
+    "keywords": [
+      "Jewellery set",
+      "Matching set",
+      "Gift set",
+      "Gemstone sets"
+    ]
+  },
+  {
+    "id": "everyday-golden-suite",
+    "sku": "HV206",
+    "name": "The Everyday Golden Suite",
+    "category": "Jewellery Sets",
+    "price": 31300,
+    "metal": "18ct yellow gold",
+    "gemstone": "None",
+    "stone": "One gold chain necklace, one pair of 25mm gold hoops and one gold knot bangle.",
+    "description": "A fine gold chain, smooth medium hoops and a sculptural knot bangle. A simple coordinated look that moves easily through the day. All pictured jewellery is included.",
+    "story": "Your everyday signature, collected.",
+    "audience": [
+      "Unisex"
+    ],
+    "style": "Everyday sets",
+    "image": "everyday-golden-suite",
+    "imageExtension": "png",
+    "options": [],
+    "optionLabel": "Options for each design",
+    "components": [
+      {
+        "productId": "golden-thread",
+        "label": "Gold chain necklace"
+      },
+      {
+        "productId": "everyday-circle-hoops",
+        "label": "Gold hoop earrings (pair)"
+      },
+      {
+        "productId": "bound-together-bangle",
+        "label": "Gold knot bangle"
+      }
+    ],
+    "pieceCount": 4,
+    "contentsSummary": "One gold chain necklace, one pair of 25mm gold hoops and one gold knot bangle.",
+    "inclusionNote": "One gold chain necklace, one pair of 25mm gold hoops and one gold knot bangle. Choose the fit of each necklace, bracelet or ring below. Earrings are supplied as one pair.",
+    "newArrival": true,
+    "tag": "Complete set",
+    "keywords": [
+      "Jewellery set",
+      "Matching set",
+      "Gift set",
+      "Everyday sets"
+    ]
+  },
+  {
+    "id": "solstice-promise-suite",
+    "sku": "HV207",
+    "name": "The Solstice Promise Suite",
+    "category": "Jewellery Sets",
+    "price": 37000,
+    "metal": "18ct yellow gold",
+    "gemstone": "Lab-grown diamond",
+    "stone": "Two diamond bands and two necklaces: one sun pendant and one moon pendant.",
+    "description": "Two brushed gold diamond bands meet a sun-and-moon necklace pair. Each person receives one ring and one necklace, with four independently selected sizes and lengths. All pictured jewellery is included.",
+    "story": "Two people. A shared orbit.",
+    "audience": [
+      "Unisex"
+    ],
+    "style": "Sets for two",
+    "image": "solstice-promise-suite",
+    "imageExtension": "png",
+    "options": [],
+    "optionLabel": "Options for each design",
+    "components": [
+      {
+        "productId": "quiet-promise-band",
+        "label": "First person’s diamond band"
+      },
+      {
+        "productId": "solstice-sun-necklace",
+        "label": "First person’s sun necklace"
+      },
+      {
+        "productId": "quiet-promise-band",
+        "label": "Second person’s diamond band"
+      },
+      {
+        "productId": "solstice-moon-necklace",
+        "label": "Second person’s moon necklace"
+      }
+    ],
+    "pieceCount": 4,
+    "contentsSummary": "Two diamond bands and two necklaces: one sun pendant and one moon pendant.",
+    "inclusionNote": "Two diamond bands and two necklaces: one sun pendant and one moon pendant. Choose each ring size and necklace or bracelet length independently.",
+    "newArrival": true,
+    "tag": "Complete set",
+    "keywords": [
+      "Jewellery set",
+      "Matching set",
+      "Gift set",
+      "Sets for two"
+    ]
+  },
+  {
+    "id": "shared-balance-suite",
+    "sku": "HV208",
+    "name": "The Shared Balance Suite",
+    "category": "Jewellery Sets",
+    "price": 15200,
+    "metal": "Sterling silver",
+    "gemstone": "Lab-grown diamond",
+    "stone": "Two engraved star rings and two yin-yang cord bracelets: one black and one white.",
+    "description": "Coordinating silver star bands join black-and-white yin-yang bracelets. One ring holds a tiny diamond; each person receives a ring and a bracelet. Choose every fit separately. All pictured jewellery is included.",
+    "story": "A shared star. A little balance.",
+    "audience": [
+      "Unisex"
+    ],
+    "style": "Sets for two",
+    "image": "shared-balance-suite",
+    "imageExtension": "png",
+    "options": [],
+    "optionLabel": "Options for each design",
+    "components": [
+      {
+        "productId": "shared-star-band",
+        "label": "First person’s star band"
+      },
+      {
+        "productId": "unity-black-silver",
+        "label": "First person’s black cord bracelet"
+      },
+      {
+        "productId": "shared-star-diamond-band",
+        "label": "Second person’s diamond star band"
+      },
+      {
+        "productId": "unity-white-silver",
+        "label": "Second person’s white cord bracelet"
+      }
+    ],
+    "pieceCount": 4,
+    "contentsSummary": "Two engraved star rings and two yin-yang cord bracelets: one black and one white.",
+    "inclusionNote": "Two engraved star rings and two yin-yang cord bracelets: one black and one white. Choose each ring size and necklace or bracelet length independently.",
+    "newArrival": true,
+    "tag": "Complete set",
+    "keywords": [
+      "Jewellery set",
+      "Matching set",
+      "Gift set",
+      "Sets for two"
+    ]
   }
 ]

@@ -15,5 +15,7 @@ jobs:
           node-version: '24'
       - run: npm run check
         working-directory: storefront
+      - run: npm test
+        working-directory: storefront
       - run: mvn -B clean package
       - run: docker compose config --quiet

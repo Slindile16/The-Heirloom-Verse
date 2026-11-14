@@ -3,6 +3,14 @@
 A responsive luxury jewellery storefront for the ShopLink integration portfolio.
 The approved palette is deep burgundy, warm pearl, dusty rose and champagne gold.
 
+## Help and visitor reviews
+
+`#/help` provides the supplied demo contact `demo@gmail.com`, the clearly fictional, non-callable number `+27 00 000 0000`, order tracking links and common questions. Order pages link to Help with their reference prefilled in an email draft. Email links open the visitor's mail app; the site does not send support messages or provide staffed phone support. Contact display settings are in `dist/support-reviews.js`.
+
+`#/reviews` lists visitor feedback and links to review forms on every visible product page. Visitors can submit 1–5 stars and a display name/comment, then update or remove their own review from the same browser session. Reviews are explicitly unverified demo feedback; no example reviews are seeded. The same-origin `/api/reviews` and `/api/reviews/{productId}` endpoints store reviews in the SQLite demo data volume, so they survive refreshes and container restarts. There is one review per design per browser session; public responses show counts, average ratings and the latest 50 reviews. Purchases and identity are not verified, and there is no moderation workflow or account system. Use fictional display names and avoid personal details.
+
+`npm test` exercises input validation, text escaping, session ownership, updating, deletion, persistence and cross-origin write rejection using isolated temporary databases.
+
 ## Run
 
 From the repository root:
@@ -30,12 +38,16 @@ service addresses using `PRODUCT_SERVICE_URL`, `INVENTORY_SERVICE_URL`,
 - Responsive homepage, four categories and 117 fictional designs.
 - Women, Men and Unisex collections, plus material, gemstone, style, size and price filters.
 - Search, category filters and price/name sorting.
+- A dedicated Jewellery Sets catalogue combines necklaces, earrings, bracelets and rings across six coordinated looks and sets for two. Every listing names its contents, includes an earring pair where pictured, and lets shoppers select each fit independently.
+- Sets reuse individual product stock and prices; the basket and order receipt retain the complete set and its selected options.
+- [Jewellery-set imagery and prompts](image-prompts-jewellery-sets.md).
+- Run `npm test` for set pricing, sizing, stock expansion, piece counts and catalogue-rendering checks.
 - Product details, size/length options and live stock checks.
 - Browser-persisted shopping bag, quantity edits and removal.
 - Validated simulated checkout with backend pricing and variant stock.
 - Order tracking with payment, stock-release and delivery states.
 - Story, care, size guide and demo delivery information.
-- SQLite checkout journal with session ownership and request references.
+- SQLite checkout journal with account ownership and request references.
 - Original AI-generated imagery; see [image prompts](image-prompts.md).
 - Eight ring styles: solitaire, halo, three-stone, eternity bands, signet, sculptural, nature-inspired and gemstone.
 - Nineteen new individual ring designs, including six solitaire cuts across the collection.
@@ -49,7 +61,9 @@ service addresses using `PRODUCT_SERVICE_URL`, `INVENTORY_SERVICE_URL`,
 - Gold sun-and-moon and silver black-and-white yin-yang pairs with independent chain lengths.
 - Two- and three-layer necklaces share one clasp; the selected length is the inner layer.
 - [Necklace imagery and prompts](image-prompts-necklaces.md).
-- Four matching ring sets: bridal duo, couples’ duo, wedding trio and stacking trio.
+- Ten complete ring sets, including the Golden Thread, Starlight and Harmony stacks and the Quiet Promise, Interwoven and Shared Star matching pairs.
+- Dewdrop, Constellation and Still Light add delicate everyday diamond designs. New stack and pair bands are also sold individually.
+- [New ring imagery and prompts](image-prompts-ring-stacks.md).
 - Six matching bracelet pairs across three distinct designs, each with gold or silver details.
 - Designs include Shared Verse beads, Unity yin-yang cords and Fleur Chain flower stations.
 - Each Fleur Chain bracelet has four flowers with chain connecting the gaps.
@@ -140,6 +154,14 @@ The month selector displays both month and gemstone. Gallery, gemstone details, 
 
 Birthstone sources: [American Gem Society](https://www.americangemsociety.org/birthstones/) and [GIA](https://www.gia.edu/birthstones).
 
+## Build Your Collection promotion
+
+Thirteen selected standalone designs carry `collectionOffer: true` in the shared catalogue. Two different eligible design IDs unlock 20% off every eligible standalone unit in the bag, with no minimum spend. Sizes and quantities of one design do not count as extra designs. Earring pairs count as one design. Complete sets and their included components stay at regular price and do not unlock the offer.
+
+The announcement, navigation, catalogue badges and `#/shop?offer=true` link expose the eligible collection. Bag and checkout summaries prompt shoppers with one eligible design to add a different one, show the savings when qualified, and restore standard pricing when the second design is removed.
+
+The gateway sends canonical design selections alongside expanded stock variants. Order Service independently reconstructs and validates those selections using its bundled catalogue, applies the offer to trusted Product Service prices, and retains original and final unit prices. Payment events use the discounted amount; order receipts expose subtotal, discount and total. Legacy direct API requests without design selections retain standard pricing. `npm test` covers frontend rules and prompts; Maven tests cover backend qualification, forged selections, set exclusions, receipts and discounted payment processing.
+
 ## Bracelet stacks
 
 Five complete sets are available under Bracelets → Bracelet stacks: Golden Chapter (five bangles, R24,500), Pearl & Promise (three pieces, R20,600), Midnight (three pieces, R15,300), Radiance (three pieces, R40,800) and Mixed Verse (three bangles, R12,800). Photos show the full stack worn on one wrist. Every pictured bracelet is included; customers choose 16cm, 18cm or 20cm for each piece. Hidden component SKUs provide individual stock reservations and sum to the displayed set price. See [image prompts](image-prompts-bracelet-stacks.md).
@@ -151,3 +173,13 @@ Seven designs include Golden Chapter Ear Stack (R11,600, three components for on
 ### Ear placement and medium hoops
 
 Celestial Verse uses an anatomical ear-stand photo; Ivy Light Climbers use mirrored ear stands to show upward placement. Stands are display props and are not included. Initial Verse Huggies now have petite 12mm hoops with 5mm letter charms, including smaller letters in live previews. Woven Circle Hoops (R8,900) and Everyday Circle Hoops (R7,900) are matching pairs of round medium 25mm hoops, with twisted and smooth finishes respectively. See [refinement image prompts](image-prompts-earring-refinements.md).
+
+## Customer accounts
+
+Signed-out visitors first see a standalone welcome screen with Create an account and Sign in, before any shop content or navigation. Registration and sign-in open from that screen and lead to the shop; a valid session goes straight to the store. Help remains available before sign-in. Existing browser bags are preserved. Checkout requires registration or sign-in; `/api/orders`, individual order retrieval and `/api/account/orders` enforce account ownership on the server. Registration signs the customer in immediately. Email addresses are normalized and unique. Checkout uses the signed-in account email; delivery names and addresses remain selectable. Signing in preserves the browser bag, and My account lists the latest 50 orders placed by that account across sessions and devices. Pre-account anonymous orders are not automatically assigned to an account.
+
+Accounts and seven-day sessions persist in the existing SQLite data volume. Passwords use scrypt (N=16384, r=8, p=5), random 16-byte salts and 64-byte derived keys. Only SHA-256 fingerprints of random 32-byte session tokens are stored; sign-in rotates the current token, and sign-out revokes it. Cookies are HttpOnly and SameSite=Strict; set `COOKIE_SECURE=true` behind HTTPS. Authentication endpoints limit attempts per IP and reject cross-origin requests. Passwords and sign-in tokens are not stored in browser localStorage.
+
+This remains a local portfolio demo. Email verification, password recovery, MFA and account administration are not implemented. Reviews retain their existing unverified visitor/session ownership. The Java services still hold order state in memory: accounts and the checkout journal persist across restarts, but restarting Java can make historical demo orders unavailable. Java service ports remain internal/local development APIs; the storefront gateway enforces customer authentication.
+
+`npm test` covers registration, duplicate emails, hashing, login, logout, expiry, Secure cookies, throttling, anonymous checkout rejection, account isolation, cross-session history and idempotency.

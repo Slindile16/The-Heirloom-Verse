@@ -3,6 +3,26 @@ import { braceletPreview } from './bracelet-preview.js';
 /** Shared jewellery-set sizing and stock rules for the browser and gateway. */
 export const isSet = product => Array.isArray(product.components) && product.components.length > 0;
 export const pieceName = product => ({Rings:'ring',Bracelets:'bracelet',Necklaces:'necklace',Earrings:'earring'}[product.category] || 'piece');
+export const includedCount = product => product.pieceCount || (isSet(product) ? product.components.length : 1);
+export const isOfferEligible = product => !!product?.collectionOffer && !product.hidden && !isSet(product);
+export function promotionTotals(catalogue, selections) {
+  if (selections.length) expandBag(catalogue, selections);
+  const designs = new Set();
+  let subtotalCents = 0, potentialDiscountCents = 0;
+  for (const selection of selections) {
+    const product = catalogue.find(p => p.id === selection.id);
+    const cents = Math.round(product.price * 100);
+    subtotalCents += cents * selection.quantity;
+    if (isOfferEligible(product)) {
+      designs.add(product.id);
+      potentialDiscountCents += Math.round(cents * 0.2) * selection.quantity;
+    }
+  }
+  const qualified = designs.size >= 2;
+  const discountCents = qualified ? potentialDiscountCents : 0;
+  return { eligibleDesignCount: designs.size, qualified, subtotal: subtotalCents / 100,
+    discount: discountCents / 100, total: (subtotalCents - discountCents) / 100 };
+}
 export function componentProducts(catalogue, product) {
   return isSet(product) ? product.components.map(component => {
     const piece = catalogue.find(p => p.id === component.productId);
@@ -115,6 +135,6 @@ export function expandBag(catalogue,selections) {
 export function selectionSnapshot(catalogue,selections) {
   return selections.map(selection=>{
     const product=catalogue.find(p=>p.id===selection.id);
-    return {name:product.name,option:[describeOption(catalogue,product,selection.option),personalizationDescription(product,selection.personalization)].filter(Boolean).join(' · '),quantity:selection.quantity,price:product.price,setSize:isSet(product)?product.components.length:(product.pieceCount||1),setUnit:pieceName(product)};
+    return {name:product.name,option:[describeOption(catalogue,product,selection.option),personalizationDescription(product,selection.personalization)].filter(Boolean).join(' · '),quantity:selection.quantity,price:product.price,setSize:includedCount(product),setUnit:pieceName(product)};
   });
 }

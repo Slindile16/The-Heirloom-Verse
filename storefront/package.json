@@ -6,7 +6,8 @@
   "description": "The Heirloom Verse storefront and same-origin ShopLink gateway",
   "scripts": {
     "start": "node server.mjs",
-    "check": "node --check server.mjs && node --check dist/app.js && node --check dist/catalogue-model.js && node --check dist/bracelet-preview.js && node --check dist/earring-preview.js"
+    "check": "node --check server.mjs && node --check dist/app.js && node --check dist/catalogue-model.js && node --check dist/bracelet-preview.js && node --check dist/earring-preview.js && node --check dist/home-campaign.js && node --check dist/support-reviews.js && node --check dist/reviews-model.js && node --check account-auth.mjs && node --check dist/accounts.js",
+    "test": "node --test test/*.test.mjs"
   },
   "engines": {
     "node": ">=22.13"

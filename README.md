@@ -8,7 +8,7 @@ storefront. Start the complete stack with Docker Compose, then visit
 including matching ring sets and black-and-white bracelet pairs, select sizes, manage a shopping bag,
 place a simulated order and track payment/delivery. See the
 [storefront guide](storefront/README.md) for direct Node setup and demo boundaries.
-Accounts, administration and durable Java repositories are the next milestone.
+Customer registration and sign-in protect storefront checkout and account order history. Administration and durable Java repositories are the next milestone.
 
 ShopLink is a Systems Integration portfolio project that connects six independent
 Java services through REST, JSON, and ActiveMQ/JMS. It validates customer orders,
