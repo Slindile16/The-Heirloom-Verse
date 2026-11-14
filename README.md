@@ -1,104 +1,50 @@
-# ShopLink — Online Store Integration System
+# The Heirloom Verse
 
-## The Heirloom Verse website
+The Heirloom Verse is a fictional online jewellery store built on ShopLink. It includes rings, earrings, necklaces, bracelets and jewellery sets, along with customer accounts, a shopping bag, reviews, help details and a simulated checkout.
 
-ShopLink now also powers **The Heirloom Verse**, a luxury fine jewellery portfolio
-storefront. Start the complete stack with Docker Compose, then visit
-**http://localhost:3000** to browse 117 designs for women, men and unisex collections,
-including matching ring sets and black-and-white bracelet pairs, select sizes, manage a shopping bag,
-place a simulated order and track payment/delivery. See the
-[storefront guide](storefront/README.md) for direct Node setup and demo boundaries.
-Customer registration and sign-in protect storefront checkout and account order history. Administration and durable Java repositories are the next milestone.
+## Run the store locally
 
-ShopLink is a Systems Integration portfolio project that connects six independent
-Java services through REST, JSON, and ActiveMQ/JMS. It validates customer orders,
-reserves stock, simulates payments, creates deliveries, and records notifications.
-
-## Run the complete system
-
-Install Docker Desktop with Linux containers and Docker Compose v2, then run:
+Install Docker Desktop with Linux containers and Docker Compose v2. From this folder, run:
 
 ```powershell
 docker compose up --build -d --wait --wait-timeout 240
 ```
 
-Allow about 4 GB for Docker and the builds. All published ports bind to localhost.
+Then open [http://localhost:3000](http://localhost:3000).
 
-| Service | Port | Main endpoints |
-|---|---|---|
-| Product | 8080 | `GET /products`, `GET /products/{id}` |
-| Order | 8081 | `POST /orders`, `GET /orders/{id}` |
-| Inventory | 8082 | `GET /inventory/{productId}`, `POST /inventory/reservations` |
-| Payment | 8083 | `POST /payments`, `GET /payments/orders/{orderId}` |
-| Delivery | 8084 | `GET /deliveries/orders/{orderId}` |
-| Notification | 8085 | `GET /notifications/{orderId}` |
-| ActiveMQ | 61616 / 8161 | JMS / [local web console](http://localhost:8161/admin) |
-
-Health is available at `/actuator/health` on every service. ActiveMQ uses development
-credentials `admin` / `admin`; this local demo is not configured for public hosting.
-
-## Place an order
+To stop the local store:
 
 ```powershell
-$body = '{"customerId":"C001","items":[{"productId":"P1002","quantity":3}]}'
-$order = Invoke-RestMethod http://127.0.0.1:8081/orders -Method Post -ContentType application/json -Body $body
-Invoke-RestMethod "http://127.0.0.1:8081/orders/$($order.id)"
+docker compose down
 ```
 
-Creation returns `201` with an ID and `PAYMENT_PENDING`. Poll the order until
-`PAID` or `PAYMENT_FAILED`. Product prices determine the payment total; the client
-does not supply a price. Successful payments create one delivery and two notices.
-Declined payments restore stock and create a payment-failure notice.
+## What visitors can do
 
-## Architecture and reliability
+- Create an account or sign in before entering the shop.
+- Browse jewellery by category, filter designs and add items to the bag.
+- Build a qualifying collection from two different eligible designs to receive 20% off those eligible items.
+- Read and leave visitor reviews.
+- Use Help to find the demo contact details and order guidance.
+- Place a simulated order and view it from My Account.
 
-Order Service calls Product and Inventory over HTTP. It sends `ORDER_CREATED` to
-Payment over JMS. The payment result updates the order; approved orders send
-`ORDER_PAID` to Delivery. Notification records order-status and delivery events.
-Each event path has a separate queue with a validated JSON contract.
+## Important demo notes
 
-Implemented safeguards include atomic multi-product reservations, overflow
-protection, idempotent consumers, payment amount/currency checks, bounded HTTP
-timeouts, transacted JMS listeners, automatic publication/release retries, and
-bounded redelivery followed by `ActiveMQ.DLQ` for poison messages.
+- This is a portfolio demo. Products, prices, reviews, addresses and payments are fictional.
+- Payments are simulated. Do not enter real payment or personal details.
+- The store needs the complete Docker stack for registration, reviews, checkout and order tracking.
+- All local service ports are bound to your computer only. A public static preview can show the catalogue, but cannot provide the live account and checkout features.
 
-Application state and retry buffers remain in memory. A broker volume persists
-messages, but application restarts do not preserve orders or inventory. Run one
-instance per service and reset the complete demo between independent scenarios.
-This is a portfolio demonstration, with simulated payments and notifications;
-production durability, authentication, and real payment/email providers are outside
-its scope.
+## Project structure
 
-## Build without Docker
+- `storefront/` — the jewellery website and its server.
+- `product-service/`, `inventory-service/`, `order-service/`, `payment-service/`, `delivery-service/`, `notification-service/` — the supporting Java services.
+- `docker-compose.yml` — starts the complete local experience.
+- `render.yaml` — configuration for a lightweight public catalogue preview.
 
-Install Java 17 or newer and Maven 3.9 or newer:
+## Basic check
 
 ```powershell
-mvn clean package
+npm --prefix storefront run check
 ```
 
-Executable jars are produced as `*-exec.jar`. To run services individually, first
-run `mvn install`, start `docker compose up -d activemq`, then run
-`mvn -f <service>/pom.xml spring-boot:run` in a terminal for each service.
-GitHub Actions checks the Java build, storefront syntax and Compose configuration.
-
-Service URLs and broker settings can be changed through `PRODUCT_SERVICE_URL`,
-`INVENTORY_SERVICE_URL`, `ACTIVEMQ_BROKER_URL`, `ACTIVEMQ_USER`, and `ACTIVEMQ_PASSWORD`.
-
-## Development roadmap
-
-- [X] **Phase 1:** Project structure and architecture.
-- [X] **Phase 2:** REST endpoints and JSON communication.
-- [X] **Phase 3:** Inventory reservations and order flow.
-- [X] **Phase 4:** Payment Service and order workflow.
-- [X] **Phase 5:** ActiveMQ/JMS messaging.
-- [X] **Phase 6:** Delivery and Notification consumers.
-- [X] **Phase 7:** Concurrent orders and stock consistency.
-- [X] **Phase 8:** Retries, error handling, and message safeguards.
-- [X] **Phase 9:** Docker setup, CI, and documentation.
-
-## Repository layout
-
-`common/` holds shared events and JMS configuration. Each `*-service/` module owns
-its API and business behavior. `storefront/` contains the jewellery website. The root
-Dockerfile builds any service, and `docker-compose.yml` starts the full system.
+Each folder has a README where it needs one.
