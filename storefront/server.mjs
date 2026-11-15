@@ -295,18 +295,21 @@ export async function createStorefront(options = {}) {
           const orders = await db.prepare(`
             SELECT order_id, created_at, selection_snapshot
             FROM checkouts
-            WHERE user_id=? AND state='accepted'
+            WHERE user_id=? AND state='accepted' AND order_id IS NOT NULL
             ORDER BY created_at DESC
             LIMIT 50
           `).all(user.id);
 
+          // Only record the count; never log order details or account identifiers.
+          console.info('[ACCOUNT ORDERS] returned', orders.length, 'order(s)');
           return json(response, 200, {
             orders: orders.map(row => ({
-              id: row.order_id,
-              createdAt: row.created_at,
-              selections: row.selection_snapshot
-                ? (typeof row.selection_snapshot==='string'?JSON.parse(row.selection_snapshot):row.selection_snapshot)
-                : []
+              id: String(row.order_id),
+              createdAt: new Date(row.created_at).toISOString(),
+              selections: Array.isArray(row.selection_snapshot)
+                ? row.selection_snapshot
+                : (typeof row.selection_snapshot === 'string'
+                  ? JSON.parse(row.selection_snapshot) : [])
             }))
           });
         }
