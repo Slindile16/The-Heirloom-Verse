@@ -13,7 +13,7 @@ export function createDatabase() {
       port: connection.port || '(default)',
       username: decodeURIComponent(connection.username),
       passwordPresent: Boolean(connection.password),
-      database: connection.pathname.replace(/^\\//, ''),
+      database: connection.pathname.slice(1),
       protocol: connection.protocol
     });
   } catch {
