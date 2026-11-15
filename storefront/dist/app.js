@@ -371,8 +371,23 @@ async function signOut(button) {
   catch(error){toast(error.message);}finally{if(button.isConnected)button.disabled=false;}
 }
 async function loadAccountOrders(view) {
-  try{const data=await api('/account/orders');if(view!==activeView)return;const list=main.querySelector('#account-orders');if(list)list.innerHTML=orderHistory(data);}
-  catch(error){if(view!==activeView)return;if(error.code==='AUTH_REQUIRED'){currentUser=null;updateAccountLink();location.hash='#/signin';return;}const list=main.querySelector('#account-orders');if(list)list.innerHTML='<p class="form-error">Your orders could not be loaded. Please refresh to try again.</p>';}
+  try {
+    const data = await api('/account/orders');
+    if (view !== activeView) return;
+    const list = main.querySelector('#account-orders');
+    if (!list) return;
+    if (!Array.isArray(data.orders)) throw new Error('Order history returned an unexpected response.');
+    list.innerHTML = orderHistory(data);
+  } catch (error) {
+    if (view !== activeView) return;
+    if (error.code === 'AUTH_REQUIRED') {
+      currentUser = null; updateAccountLink(); location.hash = '#/signin'; return;
+    }
+    const list = main.querySelector('#account-orders');
+    if (list) {
+      list.innerHTML = `<p class="form-error">We couldn't load your saved orders: ${escape(error.message)}</p><button class="button" type="button" id="retry-account-orders">Try again ↗</button>`;
+    }
+  }
 }
 main.addEventListener('click',event=>{
   if(event.target.closest('#sign-out')){signOut(event.target.closest('#sign-out'));return;}
@@ -393,6 +408,7 @@ main.addEventListener('click',event=>{
   }
   const quantity=event.target.closest('[data-quantity]');if(quantity){const item=bag[Number(quantity.dataset.quantity)];if(item){item.quantity=Math.max(1,Math.min(10,item.quantity+Number(quantity.dataset.delta)));invalidateCheckout();updateBag();render();}return;}
   const remove=event.target.closest('[data-remove]');if(remove){bag.splice(Number(remove.dataset.remove),1);invalidateCheckout();updateBag();render();return;}
+  if(event.target.closest('#retry-account-orders')){loadAccountOrders(activeView);return;}
   const refresh=event.target.closest('#refresh-order');if(refresh){clearTimeout(pollTimer);refresh.disabled=true;refreshOrder(refresh.dataset.order,activeView);}
 });
 main.addEventListener('change',event=>{
