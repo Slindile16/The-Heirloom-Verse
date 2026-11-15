@@ -4,10 +4,10 @@ import { readFile, stat } from 'node:fs/promises';
 import { readFileSync, createReadStream } from 'node:fs';
 import { resolve, dirname, extname, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { createHash, randomBytes } from 'node:crypto';
+import { createHash, randomBytes, randomUUID } from 'node:crypto';
 import { createDatabase } from './postgres-db.mjs';
 
-import { expandBag, selectionSnapshot } from './dist/catalogue-model.js';
+import { expandBag, selectionSnapshot, promotionTotals } from './dist/catalogue-model.js';
 import { validateReview } from './dist/reviews-model.js';
 import { createAccounts } from './account-auth.mjs';
 
@@ -188,6 +188,8 @@ export async function createStorefront(options = {}) {
     options.staticDirectory || resolve(directory, 'dist')
   );
 
+  // The public portfolio uses Supabase-only simulated orders; local Docker retains the ShopLink workflow.
+  const demoMode = Boolean(process.env.VERCEL) && process.env.CHECKOUT_MODE !== 'integrated';
   const db = createDatabase();
   await db.ping();
   const accounts = createAccounts(db, {
@@ -448,6 +450,9 @@ export async function createStorefront(options = {}) {
           request.method === 'GET' &&
           url.pathname === '/api/health'
         ) {
+          if (demoMode) {
+            return json(response, 200, { status: 'UP', mode: 'demo' });
+          }
           await Promise.all(
             Object.keys(services).map(service =>
               upstream(service, '/actuator/health')
@@ -533,8 +538,10 @@ export async function createStorefront(options = {}) {
             }
 
             if (existing.order_id) {
+              const savedCustomer = typeof existing.customer === 'string'
+                ? JSON.parse(existing.customer) : existing.customer;
               return json(response, 200, {
-                order: await upstream(
+                order: savedCustomer?.demoOrder || await upstream(
                   'order',
                   `/orders/${encodeURIComponent(existing.order_id)}`
                 )
@@ -548,6 +555,56 @@ export async function createStorefront(options = {}) {
                 : 'The order service did not confirm the outcome. To prevent a duplicate order, this request will not be sent again. Check the local checkout journal before placing another order.',
               'OUTCOME_UNKNOWN'
             );
+          }
+
+          if (demoMode) {
+            if (!Array.isArray(payload.selections)) {
+              throw new HttpError(400, 'Select jewellery from your shopping bag.');
+            }
+            // All prices and discounts come from the trusted server catalogue.
+            const pricing = promotionTotals(catalogue, payload.selections);
+            const order = {
+              id: `DEMO-${randomUUID()}`,
+              status: 'PAID',
+              subtotal: pricing.subtotal,
+              discount: pricing.discount,
+              total: pricing.total,
+              items: input.selections.map(item => ({
+                productName: item.name,
+                unitPrice: item.price,
+                quantity: item.quantity
+              }))
+            };
+            const rowCount = await db.prepare(`
+              INSERT INTO checkouts(
+                session, request_key, payload_hash, state,
+                order_id, customer, created_at,
+                selection_snapshot, user_id
+              ) VALUES(?,?,?,?,?,?,?,?,?)
+              ON CONFLICT(session, request_key) DO NOTHING
+            `).run(
+              owner, key, hash, 'accepted', order.id,
+              JSON.stringify({ ...input.customer, demoOrder: order }),
+              new Date().toISOString(),
+              JSON.stringify(input.selections), user.id
+            );
+            if (rowCount === 0) {
+              // A simultaneous duplicate must never create another order.
+              const prior = await db.prepare(`
+                SELECT payload_hash, customer FROM checkouts
+                WHERE session=? AND request_key=?
+              `).get(owner, key);
+              if (prior?.payload_hash !== hash) {
+                throw new HttpError(409, 'That checkout reference was already used for another bag.', 'KEY_REUSED');
+              }
+              const saved = typeof prior.customer === 'string'
+                ? JSON.parse(prior.customer) : prior.customer;
+              if (!saved?.demoOrder) {
+                throw new HttpError(409, 'This checkout request is already being processed.', 'OUTCOME_UNKNOWN');
+              }
+              return json(response, 200, { order: saved.demoOrder });
+            }
+            return json(response, 201, { order });
           }
 
           // Check backend services before submitting an order.
@@ -640,6 +697,26 @@ export async function createStorefront(options = {}) {
               404,
               'No order with this reference belongs to your account.'
             );
+          }
+
+          const savedCustomer = typeof receipt.customer === 'string'
+            ? JSON.parse(receipt.customer) : receipt.customer;
+          if (savedCustomer?.demoOrder) {
+            const order = savedCustomer.demoOrder;
+            return json(response, 200, {
+              order,
+              delivery: {
+                deliveryId: `SIM-${order.id}`,
+                status: 'SIMULATED'
+              },
+              receipt: {
+                city: savedCustomer.city,
+                province: savedCustomer.province,
+                selections: typeof receipt.selection_snapshot === 'string'
+                  ? JSON.parse(receipt.selection_snapshot)
+                  : (receipt.selection_snapshot || [])
+              }
+            });
           }
 
           let order;
