@@ -5,8 +5,16 @@ export function createDatabase() {
   if (!process.env.DATABASE_URL) {
     throw new Error('DATABASE_URL is missing from the server environment.');
   }
+  // Keep the password separate from the URI to avoid manual URL encoding.
+  // URL.password automatically encodes special characters safely.
+  const connection = new URL(process.env.DATABASE_URL);
+  if (!process.env.DB_PASSWORD) {
+    throw new Error('DB_PASSWORD is missing from the server environment.');
+  }
+  connection.password = process.env.DB_PASSWORD;
+
   const pool = new pg.Pool({
-    connectionString: process.env.DATABASE_URL,
+    connectionString: connection.toString(),
     max: 2,
     connectionTimeoutMillis: 8000,
     idleTimeoutMillis: 10000
