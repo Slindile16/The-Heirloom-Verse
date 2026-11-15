@@ -1,11 +1,11 @@
 
 import { createServer } from 'node:http';
-import { readFile, stat, mkdir } from 'node:fs/promises';
+import { readFile, stat } from 'node:fs/promises';
 import { readFileSync, createReadStream } from 'node:fs';
 import { resolve, dirname, extname, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash, randomBytes } from 'node:crypto';
-import { DatabaseSync } from 'node:sqlite';
+import { createDatabase } from './postgres-db.mjs';
 
 import { expandBag, selectionSnapshot } from './dist/catalogue-model.js';
 import { validateReview } from './dist/reviews-model.js';
@@ -188,77 +188,13 @@ export async function createStorefront(options = {}) {
     options.staticDirectory || resolve(directory, 'dist')
   );
 
-  const dataDirectory =
-    options.dataDirectory ||
-    process.env.DATA_DIRECTORY ||
-    resolve(directory, 'data');
-
-  await mkdir(dataDirectory, { recursive: true });
-
-  const db = new DatabaseSync(
-    resolve(dataDirectory, 'checkout.sqlite')
-  );
-
-  db.exec(`
-    PRAGMA journal_mode=WAL;
-    PRAGMA busy_timeout=5000;
-
-    CREATE TABLE IF NOT EXISTS checkouts (
-      session TEXT NOT NULL,
-      request_key TEXT NOT NULL,
-      payload_hash TEXT NOT NULL,
-      state TEXT NOT NULL,
-      order_id TEXT,
-      customer TEXT NOT NULL,
-      created_at TEXT NOT NULL,
-      PRIMARY KEY(session, request_key)
-    );
-
-    CREATE INDEX IF NOT EXISTS checkout_order
-    ON checkouts(session, order_id);
-  `);
-
-  if (
-    !db.prepare('PRAGMA table_info(checkouts)')
-      .all()
-      .some(column => column.name === 'selection_snapshot')
-  ) {
-    db.exec('ALTER TABLE checkouts ADD COLUMN selection_snapshot TEXT');
-  }
-
-  if (
-    !db.prepare('PRAGMA table_info(checkouts)')
-      .all()
-      .some(column => column.name === 'user_id')
-  ) {
-    db.exec('ALTER TABLE checkouts ADD COLUMN user_id TEXT');
-  }
-
-  db.exec(
-    'CREATE INDEX IF NOT EXISTS checkout_user ON checkouts(user_id, created_at)'
-  );
-
+  const db = createDatabase();
+  await db.ping();
   const accounts = createAccounts(db, {
     body,
     json,
-    secureCookies:
-      options.secureCookies ?? process.env.COOKIE_SECURE === 'true'
+    secureCookies: options.secureCookies ?? Boolean(process.env.VERCEL)
   });
-
-  db.exec(`
-    CREATE TABLE IF NOT EXISTS reviews (
-      product_id TEXT NOT NULL,
-      session TEXT NOT NULL,
-      name TEXT NOT NULL,
-      rating INTEGER NOT NULL CHECK(rating BETWEEN 1 AND 5),
-      comment TEXT NOT NULL,
-      created_at TEXT NOT NULL,
-      PRIMARY KEY(product_id, session)
-    );
-
-    CREATE INDEX IF NOT EXISTS reviews_created
-    ON reviews(created_at DESC);
-  `);
 
   const services = Object.fromEntries(
     Object.entries(defaults).map(([key, value]) => [
@@ -352,9 +288,9 @@ export async function createStorefront(options = {}) {
           request.method === 'GET' &&
           url.pathname === '/api/account/orders'
         ) {
-          const user = accounts.requireUser(request);
+          const user = await accounts.requireUser(request);
 
-          const orders = db.prepare(`
+          const orders = await db.prepare(`
             SELECT order_id, created_at, selection_snapshot
             FROM checkouts
             WHERE user_id=? AND state='accepted'
@@ -367,7 +303,7 @@ export async function createStorefront(options = {}) {
               id: row.order_id,
               createdAt: row.created_at,
               selections: row.selection_snapshot
-                ? JSON.parse(row.selection_snapshot)
+                ? (typeof row.selection_snapshot==='string'?JSON.parse(row.selection_snapshot):row.selection_snapshot)
                 : []
             }))
           });
@@ -406,13 +342,13 @@ export async function createStorefront(options = {}) {
 
           if (request.method === 'GET') {
             const rows = productId === null
-              ? db.prepare(`
+              ? await db.prepare(`
                   SELECT *
                   FROM reviews
                   ORDER BY created_at DESC, product_id, session
                   LIMIT 50
                 `).all()
-              : db.prepare(`
+              : await db.prepare(`
                   SELECT *
                   FROM reviews
                   WHERE product_id=?
@@ -421,11 +357,11 @@ export async function createStorefront(options = {}) {
                 `).all(productId);
 
             const stats = productId === null
-              ? db.prepare(`
+              ? await db.prepare(`
                   SELECT COUNT(*) AS total, AVG(rating) AS average
                   FROM reviews
                 `).get()
-              : db.prepare(`
+              : await db.prepare(`
                   SELECT COUNT(*) AS total, AVG(rating) AS average
                   FROM reviews
                   WHERE product_id=?
@@ -433,7 +369,7 @@ export async function createStorefront(options = {}) {
 
             const own = productId === null
               ? null
-              : db.prepare(`
+              : await db.prepare(`
                   SELECT name, rating, comment
                   FROM reviews
                   WHERE product_id=? AND session=?
@@ -443,7 +379,7 @@ export async function createStorefront(options = {}) {
               total: stats.total,
               average: stats.average === null
                 ? null
-                : Math.round(stats.average * 10) / 10,
+                : Math.round(Number(stats.average) * 10) / 10,
               reviews: rows.map(row => ({
                 productId: row.product_id,
                 name: row.name,
@@ -466,7 +402,7 @@ export async function createStorefront(options = {}) {
               throw new HttpError(400, error.message);
             }
 
-            db.prepare(`
+            await db.prepare(`
               INSERT INTO reviews(
                 product_id, session, name, rating, comment, created_at
               )
@@ -492,7 +428,7 @@ export async function createStorefront(options = {}) {
           }
 
           if (productId !== null && request.method === 'DELETE') {
-            db.prepare(`
+            await db.prepare(`
               DELETE FROM reviews
               WHERE product_id=? AND session=?
             `).run(productId, session);
@@ -553,7 +489,7 @@ export async function createStorefront(options = {}) {
           request.method === 'POST' &&
           url.pathname === '/api/orders'
         ) {
-          const user = accounts.requireUser(request);
+          const user = await accounts.requireUser(request);
           const owner = `user:${user.id}`;
           const key = request.headers['idempotency-key'];
 
@@ -581,7 +517,7 @@ export async function createStorefront(options = {}) {
             .update(JSON.stringify(input))
             .digest('hex');
 
-          const existing = db.prepare(`
+          const existing = await db.prepare(`
             SELECT *
             FROM checkouts
             WHERE session=? AND request_key=?
@@ -620,7 +556,7 @@ export async function createStorefront(options = {}) {
               .map(service => upstream(service, '/actuator/health'))
           );
 
-          db.prepare(`
+          await db.prepare(`
             INSERT INTO checkouts(
               session, request_key, payload_hash, state,
               order_id, customer, created_at,
@@ -651,7 +587,7 @@ export async function createStorefront(options = {}) {
               })
             });
 
-            db.prepare(`
+            await db.prepare(`
               UPDATE checkouts
               SET state='accepted', order_id=?
               WHERE session=? AND request_key=?
@@ -664,7 +600,7 @@ export async function createStorefront(options = {}) {
               error.status >= 400 &&
               error.status < 500
             ) {
-              db.prepare(`
+              await db.prepare(`
                 DELETE FROM checkouts
                 WHERE session=? AND request_key=?
               `).run(owner, key);
@@ -672,7 +608,7 @@ export async function createStorefront(options = {}) {
               throw error;
             }
 
-            db.prepare(`
+            await db.prepare(`
               UPDATE checkouts
               SET state='unknown'
               WHERE session=? AND request_key=?
@@ -690,10 +626,10 @@ export async function createStorefront(options = {}) {
           request.method === 'GET' &&
           /^\/api\/orders\/[a-zA-Z0-9-]{1,100}$/.test(url.pathname)
         ) {
-          const user = accounts.requireUser(request);
+          const user = await accounts.requireUser(request);
           const id = url.pathname.slice('/api/orders/'.length);
 
-          const receipt = db.prepare(`
+          const receipt = await db.prepare(`
             SELECT customer, selection_snapshot
             FROM checkouts
             WHERE user_id=? AND order_id=?
@@ -739,7 +675,7 @@ export async function createStorefront(options = {}) {
             }
           }
 
-          const customer = JSON.parse(receipt.customer);
+          const customer = (typeof receipt.customer==='string'?JSON.parse(receipt.customer):receipt.customer);
 
           return json(response, 200, {
             order,
@@ -748,7 +684,7 @@ export async function createStorefront(options = {}) {
               city: customer.city,
               province: customer.province,
               selections: receipt.selection_snapshot
-                ? JSON.parse(receipt.selection_snapshot)
+                ? (typeof receipt.selection_snapshot==='string'?JSON.parse(receipt.selection_snapshot):receipt.selection_snapshot)
                 : null
             }
           });
@@ -894,7 +830,7 @@ export async function createStorefront(options = {}) {
     }
   });
 
-  server.on('close', () => db.close());
+  server.on('close', () => { void db.close(); });
 
   server.requestTimeout = 20000;
   server.headersTimeout = 10000;
@@ -906,11 +842,7 @@ export async function createStorefront(options = {}) {
 // Export the HTTP server so Vercel can handle incoming requests.
 // SQLite files on Vercel use temporary storage only.
 
-const server = await createStorefront({
-  dataDirectory: process.env.VERCEL
-    ? '/tmp/shoplink'
-    : undefined
-});
+const server = await createStorefront();
 
 export default server;
 
